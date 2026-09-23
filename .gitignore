@@ -1,0 +1,118 @@
+# ============================================================
+# Quartus Prime / Platform Designer
+# ============================================================
+
+# Quartus compilation output
+
+db/
+incremental_db/
+output_files/
+
+# Quartus temporary / generated files
+
+*.rpt
+*.summary
+*.smsg
+*.pin
+*.jdi
+*.done
+*.bak
+*.qws
+*.qdb
+*.qmsg
+*.qlog
+*.qdf
+*.qpt
+
+# Platform Designer / Qsys generated output
+
+synthesis/
+simulation/
+*_generation/
+*_sim/
+*_tb/
+*_inst.v
+*_inst.vhd
+*.sopcinfo
+
+# Nios II generated BSP / application build artifacts
+
+**/bsp/
+**/obj/
+**/Debug/
+**/Release/
+**/build/
+
+# Nios II / C/C++ build artifacts
+
+*.elf
+*.map
+*.o
+*.obj
+*.a
+*.axf
+*.hex
+*.bin
+
+# ============================================================
+# Eclipse / Nios II Eclipse-based tools
+# ============================================================
+
+# Eclipse workspace metadata
+
+.metadata/
+.recommenders/
+
+# Eclipse project settings
+
+.settings/
+
+# Eclipse-generated files
+
+*.launch
+
+# ============================================================
+# C / C++ build artifacts
+# ============================================================
+
+# Generic build directories
+
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+
+# Make-generated files
+
+*.d
+*.dep
+
+# ============================================================
+# IDEs / editors
+# ============================================================
+
+.vscode/
+.idea/
+
+# Vim
+
+*.swp
+*.swo
+*~
+
+# ============================================================
+# OS-generated files
+# ============================================================
+
+.DS_Store
+Thumbs.db
+
+# ============================================================
+# Logs / temporary files
+# ============================================================
+
+*.log
+*.tmp
+*.temp
+EOF
+*.orig
+*.rej
