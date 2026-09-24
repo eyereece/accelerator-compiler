@@ -1,1 +1,1 @@
-# fpga-dot-product-accelerator
+# accelerator-compiler
