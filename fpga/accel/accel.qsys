@@ -6,7 +6,7 @@
    version="1.0"
    description=""
    tags=""
-   categories="" />
+   categories="System" />
  <parameter name="bonusData"><![CDATA[bonusData 
 {
    element avalon_test_reg_0
@@ -21,7 +21,7 @@
    {
       datum baseAddress
       {
-         value = "163912";
+         value = "262216";
          type = "String";
       }
    }
@@ -45,7 +45,7 @@
    {
       datum baseAddress
       {
-         value = "65536";
+         value = "196608";
          type = "String";
       }
    }
@@ -53,7 +53,7 @@
    {
       datum baseAddress
       {
-         value = "163840";
+         value = "262144";
          type = "String";
       }
    }
@@ -69,7 +69,7 @@
    {
       datum baseAddress
       {
-         value = "163904";
+         value = "262208";
          type = "String";
       }
    }
@@ -85,7 +85,7 @@
    {
       datum baseAddress
       {
-         value = "147456";
+         value = "131072";
          type = "String";
       }
    }
@@ -103,7 +103,7 @@
  <parameter name="hideFromIPCatalog" value="false" />
  <parameter name="lockedInterfaceDefinition" value="" />
  <parameter name="maxAdditionalLatency" value="1" />
- <parameter name="projectName" value="" />
+ <parameter name="projectName" value="accel.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="0" />
  <parameter name="testBenchDutName" value="" />
@@ -134,7 +134,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_PLATFORM_IRQ_RX_INTERRUPTS_USED" value="0" />
   <parameter name="clockFrequency" value="50000000" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='intel_niosv_m_0.dm_agent' start='0x10000' end='0x20000' type='intel_niosv_m.dm_agent' /><slave name='onchip_memory2_0.s1' start='0x24000' end='0x28000' type='altera_avalon_onchip_memory2.s1' /><slave name='intel_niosv_m_0.timer_sw_agent' start='0x28000' end='0x28040' type='intel_niosv_m.timer_sw_agent' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x28040' end='0x28048' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='avalon_test_reg_0.avalon_slave_0' start='0x28048' end='0x2804C' type='avalon_test_reg.avalon_slave_0' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x20000' end='0x30000' type='altera_avalon_onchip_memory2.s1' /><slave name='intel_niosv_m_0.dm_agent' start='0x30000' end='0x40000' type='intel_niosv_m.dm_agent' /><slave name='intel_niosv_m_0.timer_sw_agent' start='0x40000' end='0x40040' type='intel_niosv_m.timer_sw_agent' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x40040' end='0x40048' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='avalon_test_reg_0.avalon_slave_0' start='0x40048' end='0x4004C' type='avalon_test_reg.avalon_slave_0' /></address-map>]]></parameter>
   <parameter name="deviceFamily" value="MAX 10" />
   <parameter name="enableAvalonInterface" value="true" />
   <parameter name="enableDebug" value="true" />
@@ -142,7 +142,7 @@
   <parameter name="enableECCFull" value="false" />
   <parameter name="enableECCLite" value="false" />
   <parameter name="hartId" value="0" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='intel_niosv_m_0.dm_agent' start='0x10000' end='0x20000' type='intel_niosv_m.dm_agent' /><slave name='onchip_memory2_0.s1' start='0x24000' end='0x28000' type='altera_avalon_onchip_memory2.s1' /></address-map>]]></parameter>
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x20000' end='0x30000' type='altera_avalon_onchip_memory2.s1' /><slave name='intel_niosv_m_0.dm_agent' start='0x30000' end='0x40000' type='intel_niosv_m.dm_agent' /></address-map>]]></parameter>
   <parameter name="interruptMode" value="0" />
   <parameter name="numGpr" value="32" />
   <parameter name="pipelineArch" value="true" />
@@ -176,7 +176,7 @@
    version="25.1"
    enabled="1">
   <parameter name="allowInSystemMemoryContentEditor" value="false" />
-  <parameter name="autoInitializationFileName">accel_onchip_memory2_0</parameter>
+  <parameter name="autoInitializationFileName">$${FILENAME}_onchip_memory2_0</parameter>
   <parameter name="blockType" value="AUTO" />
   <parameter name="copyInitFile" value="false" />
   <parameter name="dataWidth" value="32" />
@@ -190,7 +190,7 @@
   <parameter name="initMemContent" value="false" />
   <parameter name="initializationFileName" value="onchip_mem.hex" />
   <parameter name="instanceID" value="NONE" />
-  <parameter name="memorySize" value="16384" />
+  <parameter name="memorySize" value="65536" />
   <parameter name="readDuringWriteMode" value="DONT_CARE" />
   <parameter name="resetrequest_enabled" value="true" />
   <parameter name="simAllowMRAMContentsFile" value="false" />
@@ -208,7 +208,7 @@
    start="intel_niosv_m_0.data_manager"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00028040" />
+  <parameter name="baseAddress" value="0x00040040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -217,7 +217,7 @@
    start="intel_niosv_m_0.data_manager"
    end="avalon_test_reg_0.avalon_slave_0">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00028048" />
+  <parameter name="baseAddress" value="0x00040048" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -226,7 +226,7 @@
    start="intel_niosv_m_0.data_manager"
    end="intel_niosv_m_0.dm_agent">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00010000" />
+  <parameter name="baseAddress" value="0x00030000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -235,7 +235,7 @@
    start="intel_niosv_m_0.data_manager"
    end="onchip_memory2_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00024000" />
+  <parameter name="baseAddress" value="0x00020000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -244,7 +244,7 @@
    start="intel_niosv_m_0.data_manager"
    end="intel_niosv_m_0.timer_sw_agent">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00028000" />
+  <parameter name="baseAddress" value="0x00040000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -253,7 +253,7 @@
    start="intel_niosv_m_0.instruction_manager"
    end="intel_niosv_m_0.dm_agent">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00010000" />
+  <parameter name="baseAddress" value="0x00030000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -262,7 +262,7 @@
    start="intel_niosv_m_0.instruction_manager"
    end="onchip_memory2_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00024000" />
+  <parameter name="baseAddress" value="0x00020000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
