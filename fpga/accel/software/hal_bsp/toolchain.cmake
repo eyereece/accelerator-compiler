@@ -39,6 +39,7 @@ add_link_options(
 add_compile_definitions(
     ALT_LOG_FLAGS=0
     ALT_NO_C_PLUS_PLUS
+    ALT_USE_SMALL_DRIVERS
     __hal__
 )
 

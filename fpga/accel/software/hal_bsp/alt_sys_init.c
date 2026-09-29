@@ -1,10 +1,10 @@
 /*
- * linker.h - Linker script mapping information
+ * alt_sys_init.c - HAL initialization source
  *
  * Machine generated for CPU 'intel_niosv_m_0' in SOPC Builder design 'accel'
  * SOPC Builder design path: C:/githubProj/accelerator-compiler/accelerator-compiler/fpga/accel/accel.sopcinfo
  *
- * Generated: Wed Sep 23 21:44:49 PDT 2026
+ * Generated: Wed Sep 23 23:54:46 PDT 2026
  */
 
 /*
@@ -48,54 +48,49 @@
  * of California and by the laws of the United States of America.
  */
 
-#ifndef __LINKER_H_
-#define __LINKER_H_
+#include "system.h"
+#include "sys/alt_irq.h"
+#include "sys/alt_sys_init.h"
 
-
-/*
- * BSP controls alt_load() behavior in crt0.
- *
- */
-
-#define ALT_LOAD_EXPLICITLY_CONTROLLED
-
+#include <stddef.h>
 
 /*
- * Base address and span (size in bytes) of each linker region
- *
+ * Device headers
  */
 
-#define ONCHIP_MEMORY2_0_REGION_BASE 0x24020
-#define ONCHIP_MEMORY2_0_REGION_SPAN 16352
-#define RESET_REGION_BASE 0x24000
-#define RESET_REGION_SPAN 32
-
+#include "intel_niosv_m_irq.h"
+#include "altera_avalon_jtag_uart.h"
+#include "intel_niosv_m.h"
 
 /*
- * Devices associated with code sections
- *
+ * Allocate the device storage
  */
 
-#define ALT_EXCEPTIONS_DEVICE ONCHIP_MEMORY2_0
-#define ALT_RESET_DEVICE ONCHIP_MEMORY2_0
-#define ALT_RODATA_DEVICE ONCHIP_MEMORY2_0
-#define ALT_RWDATA_DEVICE ONCHIP_MEMORY2_0
-#define ALT_TEXT_DEVICE ONCHIP_MEMORY2_0
-
+INTEL_NIOSV_M_IRQ_INSTANCE ( INTEL_NIOSV_M_0, intel_niosv_m_0);
+ALTERA_AVALON_JTAG_UART_INSTANCE ( JTAG_UART_0, jtag_uart_0);
+INTEL_NIOSV_M_INSTANCE ( INTEL_NIOSV_M_0, intel_niosv_m_0);
 
 /*
- * Initialization code at the reset address is allowed (e.g. no external bootloader).
- *
+ * Initialize the interrupt controller devices
+ * and then enable interrupts in the CPU.
+ * Called before alt_sys_init().
+ * The "base" parameter is ignored and only
+ * present for backwards-compatibility.
  */
 
-#define ALT_ALLOW_CODE_AT_RESET
-
+void alt_irq_init ( const void* base )
+{
+    INTEL_NIOSV_M_IRQ_INIT ( INTEL_NIOSV_M_0, intel_niosv_m_0);
+    alt_irq_cpu_enable_interrupts();
+}
 
 /*
- * The alt_load() facility is called from crt0 to copy sections into RAM.
- *
+ * Initialize the non-interrupt controller devices.
+ * Called after alt_irq_init().
  */
 
-#define ALT_LOAD_COPY_RWDATA
-
-#endif /* __LINKER_H_ */
+void alt_sys_init( void )
+{
+    ALTERA_AVALON_JTAG_UART_INIT ( JTAG_UART_0, jtag_uart_0);
+    INTEL_NIOSV_M_INIT ( INTEL_NIOSV_M_0, intel_niosv_m_0);
+}

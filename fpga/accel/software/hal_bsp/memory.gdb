@@ -3,7 +3,7 @@
 # Machine generated for CPU 'intel_niosv_m_0' in SOPC Builder design 'accel'
 # SOPC Builder design path: C:/githubProj/accelerator-compiler/accelerator-compiler/fpga/accel/accel.sopcinfo
 #
-# Generated: Wed Sep 23 21:44:49 PDT 2026
+# Generated: Wed Sep 23 23:54:46 PDT 2026
 
 # DO NOT MODIFY THIS FILE
 #
@@ -47,4 +47,4 @@
 # by allowing GDB to cache memory contents on the host.
 
 # onchip_memory2_0
-memory 0x24000 0x28000 cache
+memory 0x20000 0x30000 cache

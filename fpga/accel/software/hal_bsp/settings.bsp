@@ -2,12 +2,12 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal2</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Sep 23, 2026 10:19:40 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1790227180799</BspGeneratedUnixTimeStamp>
-        <BspGeneratedLocation>..\..\..\..\..\..\..\altera_lite\25.1std\niosv\bin\</BspGeneratedLocation>
+        <BspGeneratedTimeStamp>Sep 23, 2026 11:54:45 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1790232885093</BspGeneratedUnixTimeStamp>
+        <BspGeneratedLocation>C:\githubProj\accelerator-compiler\accelerator-compiler\fpga\accel\software\hal_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
-        <SopcDesignFile>..\..\accel.sopcinfo</SopcDesignFile>
-        <SystemFileHash>65d0873a8e53d08b5c7f98bfd032e77ee499b684bac5cc9c3934d31175f281</SystemFileHash>
+        <SopcDesignFile>C:\githubProj\accelerator-compiler\accelerator-compiler\fpga\accel\accel.sopcinfo</SopcDesignFile>
+        <SystemFileHash>f21968d24165dc2fca29a8f038c6bb5d2909bd53d68655a21cbbc6983f8217</SystemFileHash>
         <JdiFile>default</JdiFile>
         <Cpu>intel_niosv_m_0</Cpu>
         <SchemaVersion>1.9</SchemaVersion>
@@ -600,32 +600,32 @@
                 <Group xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         </Setting>
         <MemoryMap>
+                <slaveDescriptor>onchip_memory2_0</slaveDescriptor>
+                <addressRange>0x00020000 - 0x0002FFFF</addressRange>
+                <addressSpan>65536</addressSpan>
+                <attributes>memory</attributes>
+        </MemoryMap>
+        <MemoryMap>
                 <slaveDescriptor>intel_niosv_m_0_dm_agent</slaveDescriptor>
-                <addressRange>0x00010000 - 0x0001FFFF</addressRange>
+                <addressRange>0x00030000 - 0x0003FFFF</addressRange>
                 <addressSpan>65536</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>onchip_memory2_0</slaveDescriptor>
-                <addressRange>0x00024000 - 0x00027FFF</addressRange>
-                <addressSpan>16384</addressSpan>
-                <attributes>memory</attributes>
-        </MemoryMap>
-        <MemoryMap>
                 <slaveDescriptor>intel_niosv_m_0_timer_sw_agent</slaveDescriptor>
-                <addressRange>0x00028000 - 0x0002803F</addressRange>
+                <addressRange>0x00040000 - 0x0004003F</addressRange>
                 <addressSpan>64</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>jtag_uart_0</slaveDescriptor>
-                <addressRange>0x00028040 - 0x00028047</addressRange>
+                <addressRange>0x00040040 - 0x00040047</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>avalon_test_reg_0</slaveDescriptor>
-                <addressRange>0x00028048 - 0x0002804B</addressRange>
+                <addressRange>0x00040048 - 0x0004004B</addressRange>
                 <addressSpan>4</addressSpan>
                 <attributes/>
         </MemoryMap>
