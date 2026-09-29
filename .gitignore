@@ -7,7 +7,7 @@
 db/
 incremental_db/
 output_files/
-fpga/software/hal_bsp/
+/fpga/accel/software/hal_bsp/
 
 # Quartus temporary / generated files
 
