@@ -17,12 +17,14 @@ module scalar_unit (
     reg         result_available;
 
     wire        input_valid;
+    wire        result_ack;
 
     // Result produced by scalar_unit
     wire [31:0] result_wire;
     wire        result_valid_wire;
 
     assign input_valid = write && (address == 3'b011);
+    assign result_ack = write && (address == 3'b110);
 
     // -------------------------------------
     // RESULT
@@ -35,6 +37,9 @@ module scalar_unit (
         else if (result_valid_wire) begin
             result_reg          <= result_wire;
             result_available    <= 1'b1;
+        end
+        else if (result_ack) begin
+            result_available    <= 1'b0;
         end
     end
 
