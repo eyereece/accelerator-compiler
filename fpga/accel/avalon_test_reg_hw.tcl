@@ -40,7 +40,7 @@ add_fileset QUARTUS_SYNTH QUARTUS_SYNTH "" ""
 set_fileset_property QUARTUS_SYNTH TOP_LEVEL avalon_test_reg
 set_fileset_property QUARTUS_SYNTH ENABLE_RELATIVE_INCLUDE_PATHS false
 set_fileset_property QUARTUS_SYNTH ENABLE_FILE_OVERWRITE_MODE false
-add_fileset_file avalon_test_reg.v VERILOG PATH avalon_test_reg.v TOP_LEVEL_FILE
+add_fileset_file avalon_test_reg.v VERILOG PATH rtl/avalon_test_reg.v TOP_LEVEL_FILE
 
 
 # 
