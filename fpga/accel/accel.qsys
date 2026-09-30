@@ -73,6 +73,14 @@
          type = "String";
       }
    }
+   element led_animator_0
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
    element onchip_memory2_0
    {
       datum _sortIndex
@@ -127,6 +135,11 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
+ <interface
+   name="led_external"
+   internal="led_animator_0.led_external"
+   type="conduit"
+   dir="end" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <module
    name="avalon_test_reg_0"
@@ -186,6 +199,7 @@
   <parameter name="writeBufferDepth" value="64" />
   <parameter name="writeIRQThreshold" value="8" />
  </module>
+ <module name="led_animator_0" kind="led_animator" version="1.0" enabled="1" />
  <module
    name="onchip_memory2_0"
    kind="altera_avalon_onchip_memory2"
@@ -313,6 +327,11 @@
    start="clk_0.clk"
    end="scalar_unit_0.clock" />
  <connection
+   kind="clock"
+   version="25.1"
+   start="clk_0.clk"
+   end="led_animator_0.clock" />
+ <connection
    kind="reset"
    version="25.1"
    start="clk_0.clk_reset"
@@ -337,6 +356,11 @@
    version="25.1"
    start="clk_0.clk_reset"
    end="scalar_unit_0.reset" />
+ <connection
+   kind="reset"
+   version="25.1"
+   start="clk_0.clk_reset"
+   end="led_animator_0.reset" />
  <connection
    kind="reset"
    version="25.1"
@@ -367,6 +391,11 @@
    version="25.1"
    start="intel_niosv_m_0.dbg_reset_out"
    end="scalar_unit_0.reset" />
+ <connection
+   kind="reset"
+   version="25.1"
+   start="intel_niosv_m_0.dbg_reset_out"
+   end="led_animator_0.reset" />
  <connection
    kind="reset"
    version="25.1"

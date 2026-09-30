@@ -6,9 +6,9 @@
 int main(void)
 {
 	// TEST: 7 + 3 = 10
-	IOWR_32DIRECT(SCALAR_UNIT_0_BASE, 0x00, 7);	// a_in
-	IOWR_32DIRECT(SCALAR_UNIT_0_BASE, 0x04, 3);	// b_in
-	IOWR_32DIRECT(SCALAR_UNIT_0_BASE, 0x08, 0);	// add op: 0
+	IOWR_32DIRECT(SCALAR_UNIT_0_BASE, 0x00, 123);	// a_in
+	IOWR_32DIRECT(SCALAR_UNIT_0_BASE, 0x04, 84);	// b_in
+	IOWR_32DIRECT(SCALAR_UNIT_0_BASE, 0x08, 0);
 	IOWR_32DIRECT(SCALAR_UNIT_0_BASE, 0x0C, 1);	// valid signal: 1
 
 	// wait until result_available == 1
@@ -18,7 +18,7 @@ int main(void)
 
 	// read result
 	uint32_t result = IORD_32DIRECT(SCALAR_UNIT_0_BASE, 0x10);
-	printf("7 + 3 = %lu\n", (unsigned long)result);
+	printf("123 + 84 = %lu\n", (unsigned long)result);
 
 	// send result_ack
 	IOWR_32DIRECT(SCALAR_UNIT_0_BASE, 0x18, 1);
