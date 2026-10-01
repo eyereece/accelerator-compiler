@@ -78,7 +78,7 @@ The steps below outline how to build the current design and run the C applicatio
 | **accel.qsys** | Platform Designer system definition |
 
 Software used:
-* Quartus Prime Lite 25.1 (the installer should include everything listed here)
+* Quartus Prime Lite 25.1
 * Platform Designer
 * Quartus Programmer
 * Nios V Command Shell & niosv-bsp-editor
