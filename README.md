@@ -40,7 +40,8 @@ To see complete RTL, go to: fpga/doc/quartus-rtl
 
 ![multiplication](./fpga/doc/images/demo-output/multiplication-reset.png)
 
-The video below shows the DE10-lite board running the current design
+The video below shows the DE10-lite board running the current design.
+
 https://github.com/user-attachments/assets/8b566521-1c05-4bad-a8dc-58d336d68ac6
 
 ### Codebase Directory
