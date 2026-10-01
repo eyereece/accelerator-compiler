@@ -7,6 +7,8 @@ My goal here is to build a small FPGA-based accelerator and a compiler backend t
 I'm building it incrementally, starting with the processor-accelerator interface and scalar arithmetic, then adding tensor operations and compiler support as the project develops.
 
 ### Current Architecture
+---
+
 ![high-level-architecture](./fpga/doc/images/diagram/high-level-architecture.png)
 #### High Level Architecture
 On a high-level, the Nios V CPU controls the system, fetching instructions and accessing data in on-chip RAM. It communicates with the host computer's JTAG console through the JTAG UART. A custom test register was used to verify the initial system connections, while the scalar unit supports addition, subtraction, and multiplication.
@@ -34,19 +36,65 @@ The table below shows what each address does when read or written
 To see complete RTL, go to: fpga/doc/quartus-rtl
 
 ### Demo Output
+---
+
 ![addition](./fpga/doc/images/demo-output/addition.png)
 
 ![subtraction](./fpga/doc/images/demo-output/subtraction.png)
 
 ![multiplication](./fpga/doc/images/demo-output/multiplication-reset.png)
 
-The video below shows the DE10-lite board running the current design.
+The video below shows the DE10-lite board running the current design, along with a simple LED animation.
 
 https://github.com/user-attachments/assets/8b566521-1c05-4bad-a8dc-58d336d68ac6
 
 ### Codebase Directory
+---
 
-### How to run
+```
+accelerator-compiler
+├── fpga/
+│   ├── accel/
+│       ├── accel/              # generated Platform Designer system files
+│       ├── rtl/                # custom hardware modules
+│       ├── software/hal_app    # C application running on Nios V
+|       └── tb/                 # RTL testbenches
+│   └── doc/                    # diagrams, images, & documentation
+├── .gitignore
+├── LICENSE
+└── README.md
+```
 
-Software Used: 
-* Quartus Prime Lite 25.1 (I used their full installer which includes all the add-ons)
+### Build and Run
+---
+
+The steps below outline how to build the current design and run the C application on the DE10-Lite board
+
+| File | Purpose |
+| :--- | :---: |
+| **accel.qpf** | Quartus project file |
+| **accel.qsf** | project settings, device selection, & pin assignment |
+| **fpga_top.sdc** | timing constraints |
+| **accel.qsys** | Platform Designer system definition |
+
+Software used:
+* Quartus Prime Lite 25.1 (the installer should include everything listed here)
+* Platform Designer
+* Quartus Programmer
+* Nios V Command Shell & niosv-bsp-editor
+* Ashling RiscFree IDE
+* juart-terminal (for viewing console output)
+* Questa for RTL simulation (requires a separate free license)
+
+Build & program the hardware:
+* Open accel.qpf in Quartus Prime
+* Open accel.qsys in Platform Designer and generate HDL
+* Make sure fpga_top.v is included in the project and fpga_top is set as the top-level module
+* Run Full Compilation
+* Open Quartus Programmer and program the board using the generated .sof file
+
+Build & run the software
+* Launch niosv-bsp-editor from the Nios V Command Shell and generate the BSP
+* Import the Nios V application project into Ashling
+* Build and run hal_app on the board
+* Open juart-terminal to view the output
