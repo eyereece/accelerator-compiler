@@ -1,0 +1,5 @@
+# Platform Designer generated system output
+fpga/accel/accel** linguist-generated=true
+
+# Generated HTML reports
+fpga/accel/**/*.html linguist-generated=true
