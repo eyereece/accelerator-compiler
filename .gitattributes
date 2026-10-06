@@ -3,3 +3,5 @@ fpga/accel/accel** linguist-generated=true
 
 # Generated HTML reports
 fpga/accel/**/*.html linguist-generated=true
+
+fpga/accel/*_hw.tcl linguist-generated=true
