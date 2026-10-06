@@ -8,6 +8,7 @@ db/
 incremental_db/
 output_files/
 /fpga/accel/software/hal_bsp/
+/fpga/accel/questa_sim/
 
 # Quartus temporary / generated files
 
