@@ -13,24 +13,8 @@
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "5";
          type = "int";
-      }
-   }
-   element avalon_test_reg_0
-   {
-      datum _sortIndex
-      {
-         value = "3";
-         type = "int";
-      }
-   }
-   element avalon_test_reg_0.avalon_slave_0
-   {
-      datum baseAddress
-      {
-         value = "134348904";
-         type = "String";
       }
    }
    element clk_0
@@ -39,6 +23,22 @@
       {
          value = "0";
          type = "int";
+      }
+   }
+   element controller_0
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element controller_0.avalon_slave_0
+   {
+      datum baseAddress
+      {
+         value = "134348800";
+         type = "String";
       }
    }
    element intel_niosv_m_0
@@ -61,7 +61,7 @@
    {
       datum baseAddress
       {
-         value = "134348800";
+         value = "134352896";
          type = "String";
       }
    }
@@ -77,7 +77,7 @@
    {
       datum baseAddress
       {
-         value = "134348896";
+         value = "134352960";
          type = "String";
       }
    }
@@ -85,31 +85,15 @@
    {
       datum _sortIndex
       {
-         value = "5";
+         value = "3";
          type = "int";
-      }
-   }
-   element scalar_unit_0
-   {
-      datum _sortIndex
-      {
-         value = "4";
-         type = "int";
-      }
-   }
-   element scalar_unit_0.avalon_slave_0
-   {
-      datum baseAddress
-      {
-         value = "134348864";
-         type = "String";
       }
    }
    element sdram_controller_0
    {
       datum _sortIndex
       {
-         value = "6";
+         value = "4";
          type = "int";
       }
    }
@@ -322,17 +306,13 @@
   <parameter name="WIDTH_CLOCK" value="5" />
   <parameter name="WIDTH_PHASECOUNTERSELECT" value="" />
  </module>
- <module
-   name="avalon_test_reg_0"
-   kind="avalon_test_reg"
-   version="1.0"
-   enabled="1" />
  <module name="clk_0" kind="clock_source" version="25.1" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
+ <module name="controller_0" kind="controller" version="1.0" enabled="1" />
  <module
    name="intel_niosv_m_0"
    kind="intel_niosv_m"
@@ -344,7 +324,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_PLATFORM_IRQ_RX_INTERRUPTS_USED" value="0" />
   <parameter name="clockFrequency" value="50000000" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x4000000' end='0x8000000' type='sdram_controller.s1' /><slave name='intel_niosv_m_0.dm_agent' start='0x8010000' end='0x8020000' type='intel_niosv_m.dm_agent' /><slave name='intel_niosv_m_0.timer_sw_agent' start='0x8020000' end='0x8020040' type='intel_niosv_m.timer_sw_agent' /><slave name='scalar_unit_0.avalon_slave_0' start='0x8020040' end='0x8020060' type='scalar_unit.avalon_slave_0' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8020060' end='0x8020068' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='avalon_test_reg_0.avalon_slave_0' start='0x8020068' end='0x802006C' type='avalon_test_reg.avalon_slave_0' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x4000000' end='0x8000000' type='sdram_controller.s1' /><slave name='intel_niosv_m_0.dm_agent' start='0x8010000' end='0x8020000' type='intel_niosv_m.dm_agent' /><slave name='controller_0.avalon_slave_0' start='0x8020000' end='0x8021000' type='controller.avalon_slave_0' /><slave name='intel_niosv_m_0.timer_sw_agent' start='0x8021000' end='0x8021040' type='intel_niosv_m.timer_sw_agent' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8021040' end='0x8021048' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
   <parameter name="deviceFamily" value="MAX 10" />
   <parameter name="enableAvalonInterface" value="true" />
   <parameter name="enableDebug" value="true" />
@@ -381,7 +361,6 @@
   <parameter name="writeIRQThreshold" value="8" />
  </module>
  <module name="led_animator_0" kind="led_animator" version="1.0" enabled="1" />
- <module name="scalar_unit_0" kind="scalar_unit" version="1.0" enabled="1" />
  <module
    name="sdram_controller_0"
    kind="sdram_controller"
@@ -393,25 +372,16 @@
    start="intel_niosv_m_0.data_manager"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08020060" />
+  <parameter name="baseAddress" value="0x08021040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
    kind="avalon"
    version="25.1"
    start="intel_niosv_m_0.data_manager"
-   end="avalon_test_reg_0.avalon_slave_0">
+   end="controller_0.avalon_slave_0">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08020068" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="25.1"
-   start="intel_niosv_m_0.data_manager"
-   end="scalar_unit_0.avalon_slave_0">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08020040" />
+  <parameter name="baseAddress" value="0x08020000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -438,7 +408,7 @@
    start="intel_niosv_m_0.data_manager"
    end="intel_niosv_m_0.timer_sw_agent">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08020000" />
+  <parameter name="baseAddress" value="0x08021000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -474,17 +444,12 @@
    kind="clock"
    version="25.1"
    start="clk_0.clk"
-   end="avalon_test_reg_0.clock" />
- <connection
-   kind="clock"
-   version="25.1"
-   start="clk_0.clk"
-   end="scalar_unit_0.clock" />
- <connection
-   kind="clock"
-   version="25.1"
-   start="clk_0.clk"
    end="led_animator_0.clock" />
+ <connection
+   kind="clock"
+   version="25.1"
+   start="clk_0.clk"
+   end="controller_0.clock" />
  <connection
    kind="clock"
    version="25.1"
@@ -514,22 +479,17 @@
    kind="reset"
    version="25.1"
    start="clk_0.clk_reset"
-   end="avalon_test_reg_0.reset" />
- <connection
-   kind="reset"
-   version="25.1"
-   start="clk_0.clk_reset"
-   end="scalar_unit_0.reset" />
- <connection
-   kind="reset"
-   version="25.1"
-   start="clk_0.clk_reset"
    end="led_animator_0.reset" />
  <connection
    kind="reset"
    version="25.1"
    start="clk_0.clk_reset"
    end="sdram_controller_0.reset" />
+ <connection
+   kind="reset"
+   version="25.1"
+   start="clk_0.clk_reset"
+   end="controller_0.reset" />
  <connection
    kind="reset"
    version="25.1"
@@ -554,22 +514,17 @@
    kind="reset"
    version="25.1"
    start="intel_niosv_m_0.dbg_reset_out"
-   end="avalon_test_reg_0.reset" />
- <connection
-   kind="reset"
-   version="25.1"
-   start="intel_niosv_m_0.dbg_reset_out"
-   end="scalar_unit_0.reset" />
- <connection
-   kind="reset"
-   version="25.1"
-   start="intel_niosv_m_0.dbg_reset_out"
    end="led_animator_0.reset" />
  <connection
    kind="reset"
    version="25.1"
    start="intel_niosv_m_0.dbg_reset_out"
    end="sdram_controller_0.reset" />
+ <connection
+   kind="reset"
+   version="25.1"
+   start="intel_niosv_m_0.dbg_reset_out"
+   end="controller_0.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />

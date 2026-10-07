@@ -12,18 +12,17 @@ preplace inst accel.intel_niosv_m_0.hart -pg 1
 preplace inst accel.altpll_0 -pg 1 -lvl 2 -y 450
 preplace inst accel.intel_niosv_m_0.debug_reset_bridge -pg 1
 preplace inst accel.intel_niosv_m_0.clock_bridge -pg 1
-preplace inst accel.onchip_memory2_0 -pg 1 -lvl 5 -y 210
 preplace inst accel.intel_niosv_m_0.reset_bridge -pg 1
 preplace inst accel.led_animator_0 -pg 1 -lvl 4 -y 270
 preplace inst accel.intel_niosv_m_0.timer_module -pg 1
-preplace netloc FAN_OUT<net_container>accel</net_container>(SLAVE)scalar_unit_0.clock,(SLAVE)intel_niosv_m_0.clk,(SLAVE)avalon_test_reg_0.clock,(SLAVE)altpll_0.inclk_interface,(SLAVE)led_animator_0.clock,(SLAVE)jtag_uart_0.clk,(MASTER)clk_0.clk,(SLAVE)onchip_memory2_0.clk1) 1 1 4 140 420 NJ 420 920 380 1290
+preplace netloc EXPORT<net_container>accel</net_container>(SLAVE)clk_0.clk_in,(SLAVE)accel.clk) 1 0 3 NJ 110 NJ 110 NJ
+preplace netloc FAN_OUT<net_container>accel</net_container>(SLAVE)scalar_unit_0.clock,(MASTER)clk_0.clk,(SLAVE)altpll_0.inclk_interface,(SLAVE)intel_niosv_m_0.clk,(SLAVE)jtag_uart_0.clk,(SLAVE)avalon_test_reg_0.clock,(SLAVE)led_animator_0.clock) 1 1 4 140 240 NJ 240 940 240 1290
 preplace netloc POINT_TO_POINT<net_container>accel</net_container>(MASTER)altpll_0.c0,(SLAVE)sdram_controller_0.clock) 1 2 1 650
 preplace netloc EXPORT<net_container>accel</net_container>(MASTER)altpll_0.c1,(MASTER)accel.sdram_clk) 1 2 4 NJ 480 NJ 480 NJ 480 NJ
-preplace netloc INTERCONNECT<net_container>accel</net_container>(SLAVE)sdram_controller_0.reset,(SLAVE)altpll_0.inclk_interface_reset,(SLAVE)led_animator_0.reset,(SLAVE)avalon_test_reg_0.reset,(SLAVE)intel_niosv_m_0.reset,(SLAVE)intel_niosv_m_0.ndm_reset_in,(MASTER)intel_niosv_m_0.dbg_reset_out,(SLAVE)jtag_uart_0.reset,(SLAVE)scalar_unit_0.reset,(SLAVE)onchip_memory2_0.reset1,(MASTER)clk_0.clk_reset) 1 1 4 140 540 630 300 900 400 1310
-preplace netloc EXPORT<net_container>accel</net_container>(SLAVE)accel.reset,(SLAVE)clk_0.clk_in_reset) 1 0 3 NJ 130 NJ 130 NJ
+preplace netloc EXPORT<net_container>accel</net_container>(SLAVE)led_animator_0.led_external,(SLAVE)accel.led_external) 1 0 4 NJ 260 NJ 260 NJ 260 NJ
 preplace netloc EXPORT<net_container>accel</net_container>(SLAVE)accel.sdram,(SLAVE)sdram_controller_0.dram) 1 0 3 NJ 340 NJ 340 NJ
-preplace netloc EXPORT<net_container>accel</net_container>(SLAVE)accel.led_external,(SLAVE)led_animator_0.led_external) 1 0 4 NJ 260 NJ 260 NJ 260 NJ
-preplace netloc EXPORT<net_container>accel</net_container>(SLAVE)accel.clk,(SLAVE)clk_0.clk_in) 1 0 3 NJ 110 NJ 110 NJ
-preplace netloc INTERCONNECT<net_container>accel</net_container>(SLAVE)avalon_test_reg_0.avalon_slave_0,(MASTER)intel_niosv_m_0.data_manager,(SLAVE)intel_niosv_m_0.timer_sw_agent,(SLAVE)jtag_uart_0.avalon_jtag_slave,(SLAVE)onchip_memory2_0.s1,(SLAVE)scalar_unit_0.avalon_slave_0,(MASTER)intel_niosv_m_0.instruction_manager,(SLAVE)intel_niosv_m_0.dm_agent,(SLAVE)sdram_controller_0.s1) 1 2 3 670 280 960 360 1270
+preplace netloc INTERCONNECT<net_container>accel</net_container>(SLAVE)avalon_test_reg_0.avalon_slave_0,(SLAVE)intel_niosv_m_0.dm_agent,(MASTER)intel_niosv_m_0.data_manager,(MASTER)intel_niosv_m_0.instruction_manager,(SLAVE)jtag_uart_0.avalon_jtag_slave,(SLAVE)scalar_unit_0.avalon_slave_0,(SLAVE)intel_niosv_m_0.timer_sw_agent,(SLAVE)sdram_controller_0.s1) 1 2 3 670 300 960 220 1270
+preplace netloc EXPORT<net_container>accel</net_container>(SLAVE)clk_0.clk_in_reset,(SLAVE)accel.reset) 1 0 3 NJ 130 NJ 130 NJ
+preplace netloc INTERCONNECT<net_container>accel</net_container>(SLAVE)scalar_unit_0.reset,(SLAVE)led_animator_0.reset,(MASTER)clk_0.clk_reset,(MASTER)intel_niosv_m_0.dbg_reset_out,(SLAVE)intel_niosv_m_0.ndm_reset_in,(SLAVE)intel_niosv_m_0.reset,(SLAVE)avalon_test_reg_0.reset,(SLAVE)sdram_controller_0.reset,(SLAVE)altpll_0.inclk_interface_reset,(SLAVE)jtag_uart_0.reset) 1 1 4 160 440 630 280 920 260 1310
 levelinfo -pg 1 0 90 1590
 levelinfo -hier accel 100 120 440 730 1070 1360 1500
