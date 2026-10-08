@@ -3,46 +3,86 @@
 
 #### This is an ongoing project
 
-My goal here is to build a small FPGA-based accelerator and a compiler backend that maps computations to the custom hardware. The goal is to learn how AI accelerators work and how a compiler connects computations to the hardware's compute unit and memory.
-I'm building it incrementally, starting with the processor-accelerator interface and scalar arithmetic, then adding tensor operations and compiler support as the project develops.
+I'm building a small FPGA-based accelerator and a compiler backend that maps computations to custom hardware. Through this project, I want to understand how AI accelerators work and how compilers map operations and data to their compute units and memory.
 
-### Current Architecture
+I'm developing it incrementally, starting with the processor-accelerator interface and scalar arithmetic, then adding tensor operations and compiler support as the project progresses.
+
+### Hardware Architecture
 ---
 
-![high-level-architecture](./fpga/doc/images/diagram/high-level-architecture.png)
+![high-level-architecture](./doc/images/diagram/high-level-architecture.png)
 #### High Level Architecture
-On a high-level, the Nios V CPU controls the system, fetching instructions and accessing data in on-chip RAM. It communicates with the host computer's JTAG console through the JTAG UART. A custom test register was used to verify the initial system connections, while the scalar unit supports addition, subtraction, and multiplication.
+At a high level, the Nios V/m CPU controls the system and runs its software from external SDRAM through the SDRAM controller. The JTAG UART provides console communication with the computer.
 
-![scalar-unit-architecture](./fpga/doc/images/diagram/scalar_unit_architecture.png)
-#### Scalar Unit Architecture
-The scalar unit wraps an arithmetic unit with registers that the CPU can read and write. Its interfaces takes a 3-bit address, read and write signals, and 32-bit write data, and returns 32-bit read data.
+The accelerator’s top-level module, `controller_unit`, connects the CPU interface to three modules: `instruction_ram`, `execution_controller`, and `scalar_unit`. The accelerator has its own instruction memory, separate from the external SDRAM used by Nios. This memory stores up to 512 32-bit words containing instructions and immediate values.
 
-The CPU first writes the two operands and an operation code into their registers. It then writes to the start address, which asserts input_valid and tells the arithmetic unit to compute using the stored inputs.
+Nios loads an accelerator program into instruction RAM, sets its length, and starts execution through the following word addresses:
 
-When the arithmetic unit produces a result, it asserts result_valid. The scalar unit captures the result in the result register and sets the status flag, result_available. The CPU can check this flag, read the result, and then write to the acknoledgment address. This asserts result_ack, clearing the status flag while leaving the stored result unchanged.
+| Word address | Write | Read |
+| :--- | :--- | :--- |
+| 0 | Start when `writedata[0] = 1` | 0 |
+| 1 | Ignored | Status: `busy` (bit 0), `done` (bit 1), `error` (bit 2) |
+| 2 | Program length, including immediate words | Program length |
+| 8–15 | Ignored | Registers R0–R7 |
+| 512–1023 | Instruction RAM words 0–511 | 0 |
 
-The table below shows what each address does when read or written
-| Address | write | read |
-| :--- | :---: | :---: |
-| **000** | A | A |
-| **001** | B | B |
-| **010** | op | op |
-| **011** | input_valid | - |
-| **100** | - | result |
-| **101** | - | result_valid |
-| **110** | result_ack | - |
-| **111** | - | - |
+These addresses are relative to the controller unit; their CPU byte offsets are the word addresses multiplied by four. Program writes, length changes, and additional start requests are ignored while execution is busy.
 
-To see complete RTL, go to: fpga/doc/quartus-rtl
+After launch, `execution_controller` sequences the program independently. It maintains a program counter and eight 32-bit registers, R0–R7, and fetches instructions from instruction RAM. Each instruction has the following layout:
+
+| Bits | Field | Purpose |
+| :--- | :--- | :--- |
+| 31–28 | Opcode | Selects the instruction |
+| 27–25 | Destination register | Register receiving the result |
+| 24–22 | Source A register | First arithmetic operand |
+| 21–19 | Source B register | Second arithmetic operand |
+| 18–0 | Unused | Ignored by the hardware |
+
+The execution controller decodes the opcode in bits 31–28:
+
+| Opcode | Instruction | Action |
+| :--- | :--- | :--- |
+| `0000` | HALT | Stop execution and set `done` |
+| `0001` | LOAD_IMM | Load the next RAM word into the destination register |
+| `0010` | ADD | Add the two source registers |
+| `0011` | SUB | Subtract source B from source A |
+| `0100` | MUL | Multiply the two source registers |
+
+For `LOAD_IMM`, the next RAM word is treated as a full 32-bit value, so the instruction consumes two words. For arithmetic instructions, the execution controller reads the source registers and translates the opcode into the scalar unit’s 2-bit operation code: `00` for addition, `01` for subtraction, or `10` for multiplication.
+
+The `scalar_unit` captures the operands and operation code and passes them to `scalar_arith_unit`, which performs the calculation. The scalar unit returns the result with a completion signal, and the execution controller writes it into the destination register before fetching the next instruction.
+
+Nios polls the execution status while the accelerator runs. Execution stops when the controller encounters `HALT` or detects an error, such as an unsupported opcode or a fetch beyond the program length. Nios can then read the final values from R0–R7. The `done` and `error` flags remain set until reset or the next accepted start request.
+
+The diagram below shows the execution controller’s states and the transitions between them.
+![fsm-controller-unit](./doc/images/diagram/fsm-execution-controller.png)
+
+For more detailed diagrams, go to this folder: .\doc\images\diagram
+
+### Compiler Backend — In Progress
+---
+
+The compiler backend is being developed in C++, with operations constructed directly in a small IR, without a parser. Each operation defines a logical value, and the program identifies which value to return as its output.
+
+The current implementation includes:
+
+- **IR validation:** Checks for duplicate definitions, undefined operands and outputs, self-references, and unsupported operations.
+- **Basic register allocation:** Assigns a separate hardware register to each result in operation order. Programs requiring more than eight registers are rejected; register reuse and spilling are not yet supported.
+- **Instruction encoding:** Converts constants into `LOAD_IMM` instructions followed by their values, encodes arithmetic operations, and appends `HALT`. The encoder enforces the instruction RAM’s 512-word limit.
+
+IR validation and register allocation have been checked locally with a small example computing `(7 + 3) × 2`, assigning its output to R4. Instruction encoding has been added, but local execution and FPGA integration are still pending.
+
+Next, I’ll verify the encoded output, add a C++ reference executor and repeatable tests, and export generated programs for execution on the FPGA. Board results will then be compared against the reference executor.
 
 ### Demo Output
 ---
+<b>Hardware Demo Output running C program on Nios V/m</b>
+![system-demo-output](./doc/images/demo-output/system-demo-output.png)
 
-![addition](./fpga/doc/images/demo-output/addition.png)
 
-![subtraction](./fpga/doc/images/demo-output/subtraction.png)
+<b>Compiler Demo output</b>
+![compiler-demo-output](./doc/images/demo-output/compiler-output.png)
 
-![multiplication](./fpga/doc/images/demo-output/multiplication-reset.png)
 
 The video below shows the DE10-lite board running the current design, along with a simple LED animation.
 
