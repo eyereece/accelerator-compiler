@@ -99,7 +99,10 @@ accelerator-compiler
 │       ├── rtl/                # custom hardware modules
 │       ├── software/hal_app    # C application running on Nios V
 |       └── tb/                 # RTL testbenches
-│   └── doc/                    # diagrams, images, & documentation
+├── compiler/
+│   ├── include/                # C++ headers
+|   └── src/                    # compiler code
+├── doc/                        # diagrams, images, & notes
 ├── .gitignore
 ├── LICENSE
 └── README.md
