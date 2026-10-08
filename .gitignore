@@ -55,6 +55,7 @@ simulation/
 *.axf
 *.hex
 *.bin
+*.exe
 
 # ============================================================
 # Eclipse / Nios II Eclipse-based tools
