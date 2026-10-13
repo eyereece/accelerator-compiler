@@ -2,6 +2,7 @@
 #include "validate.h"
 #include "reg_alloc.h"
 #include "enc.h"
+#include "exec.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -89,8 +90,12 @@ int main() {
         std::cout << std::dec << std::setfill(' ')
                 << "Program words: " << words.size() << '\n';
 
+        const auto registers = execute(words);
+        std::cout << "\n Reference result: R" << allocation.output_reg
+                    << " = " << registers.at(allocation.output_reg) << '\n';
+
     } catch (const std::runtime_error& error) {
-        std::cerr << "Compilation failed: " << error.what() << '\n';
+        std::cerr << "Compilation failed or execution failed: " << error.what() << '\n';
         return 1;
     }
     return 0;
