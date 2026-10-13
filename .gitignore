@@ -80,6 +80,7 @@ simulation/
 
 # Generic build directories
 
+/compiler/generated/
 cmake-build-*/
 CMakeFiles/
 CMakeCache.txt

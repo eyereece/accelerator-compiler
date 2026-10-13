@@ -27,7 +27,7 @@ std::array<std::uint32_t, 8> execute(const std::vector<std::uint32_t>& words) {
                     return registers;
 
                 case 1: // LOAD_IMM: the next word is data, not an instruction
-                    if (pc >= words.size()) {
+                    if (pc + 1 >= words.size()) {
                         throw std::runtime_error(
                             "Missing LOAD_IMM data at word" + std::to_string(pc));
                     }

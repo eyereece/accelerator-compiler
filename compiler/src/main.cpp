@@ -3,10 +3,12 @@
 #include "reg_alloc.h"
 #include "enc.h"
 #include "exec.h"
+#include "export.h"
 
 #include <iostream>
 #include <stdexcept>
 #include <iomanip>
+#include <filesystem>
 
 int main() {
     using namespace accel;
@@ -93,6 +95,17 @@ int main() {
         const auto registers = execute(words);
         std::cout << "\n Reference result: R" << allocation.output_reg
                     << " = " << registers.at(allocation.output_reg) << '\n';
+
+        std::filesystem::create_directories("compiler/generated");
+
+        export_program(
+            words,
+            allocation.output_reg,
+            "compiler/generated/program"
+        );
+
+        std::cout << "Exported program.txt, program.h, and program.bin"
+                    << " to compiler/generated\n";
 
     } catch (const std::runtime_error& error) {
         std::cerr << "Compilation failed or execution failed: " << error.what() << '\n';
