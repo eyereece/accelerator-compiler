@@ -94,6 +94,9 @@ Next steps are to export expected results, add an independent IR evaluator and r
 <b>Compiler Demo output</b>
 ![compiler-demo-output](./doc/images/demo-output/compiler-output.png)
 
+<b>Compiler generated program.txt for debugging</b>
+![program-txt](./doc/images/demo-output/generated-program-txt-for-debug.png)
+
 
 The compiler generates:
 * program.txt: Readable instruction listing for debugging.
