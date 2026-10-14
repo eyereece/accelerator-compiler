@@ -11,6 +11,7 @@ I'm developing it incrementally, starting with the processor-accelerator interfa
 I have written a series of articles on the implementation details of the project available here:
 1. [Building an FPGA accelerator and its compiler](https://www.joankusuma.com/post/building-an-fpga-accelerator-and-its-compiler)
 2. [My FPGA Scalar Compute Unit Architecture](https://www.joankusuma.com/post/my-fpga-scalar-compute-unit-architecture)
+3. Compiler implementation writeup in-progress
 
 ### Hardware Architecture
 ---
