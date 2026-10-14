@@ -7,6 +7,11 @@ I'm building a small FPGA-based accelerator and a compiler backend that maps com
 
 I'm developing it incrementally, starting with the processor-accelerator interface and scalar arithmetic, then adding tensor operations and compiler support as the project progresses.
 
+#### Implementation Details
+I have written a series of articles on the implementation details of the project available here:
+1. [Building an FPGA accelerator and its compiler](https://www.joankusuma.com/post/building-an-fpga-accelerator-and-its-compiler)
+2. [My FPGA Scalar Compute Unit Architecture](https://www.joankusuma.com/post/my-fpga-scalar-compute-unit-architecture)
+
 ### Hardware Architecture
 ---
 
@@ -59,30 +64,40 @@ The diagram below shows the execution controller’s states and the transitions 
 
 For more detailed diagrams, go to this folder: .\doc\images\diagram
 
-### Compiler Backend — In Progress
+### Compiler Backend
 ---
 
-The compiler backend is being developed in C++, with operations constructed directly in a small IR, without a parser. Each operation defines a logical value, and the program identifies which value to return as its output.
+The compiler backend is implemented in C++17 using only the STL. Programs are currently constructed directly in a small IR, without a parser. Each operation defines a logical value, and the program identifies which value to return as its output. Supported operations are constants, addition, subtraction, and multiplication using 32-bit integer arithmetic.
 
 The current implementation includes:
 
-- **IR validation:** Checks for duplicate definitions, undefined operands and outputs, self-references, and unsupported operations.
-- **Basic register allocation:** Assigns a separate hardware register to each result in operation order. Programs requiring more than eight registers are rejected; register reuse and spilling are not yet supported.
-- **Instruction encoding:** Converts constants into `LOAD_IMM` instructions followed by their values, encodes arithmetic operations, and appends `HALT`. The encoder enforces the instruction RAM’s 512-word limit.
+- **IR validation:** Checks for duplicate definitions, undefined operands and outputs, self-references, forward references, and unsupported operations.
+- **Basic register allocation:** Assigns a separate hardware register to each result in operation order. Programs with more than eight results are rejected; register reuse are not yet supported.
+- **Instruction encoding:** Converts constants into `LOAD_IMM` instructions followed by their values, encodes `ADD`, `SUB`, and `MUL`, and appends `HALT`. The encoder enforces the instruction RAM’s 512-word limit.
+- **Reference execution:** Executes encoded instructions in C++, modeling the accelerator’s eight registers and 32-bit wraparound arithmetic. Detects invalid opcodes, missing immediate words, missing `HALT`, and invalid program lengths.
+- **Program export:** Generates `program.txt` with a readable instruction listing, `program.h` with the instruction array, word count, and output-register index, and `program.bin` with explicitly little-endian instruction words.
+- **Software tests:** 29 passing tests cover arithmetic and wraparound, exact instruction encoding, IR validation, register exhaustion, malformed instruction streams, and executor edge cases.
 
-IR validation and register allocation have been checked locally with a small example computing `(7 + 3) × 2`, assigning its output to R4. Instruction encoding has been added, but local execution and FPGA integration are still pending.
+The first end-to-end program, `(7 + 3) × 2`, compiles into nine instruction words and produces `R4 = 20` in both the C++ reference executor and on the FPGA. This completes the path from directly constructed IR through validation, register allocation, encoding, and the Nios loader to accelerator execution.
 
-Next, I’ll verify the encoded output, add a C++ reference executor and repeatable tests, and export generated programs for execution on the FPGA. Board results will then be compared against the reference executor.
+The current board workflow is to build and run the host compiler, copy the generated `program.h` into `hal_app`, then rebuild and run the Nios application. BSP regeneration and FPGA rebuilding are unnecessary while the hardware interface remains unchanged. The loader checks completion, hardware errors, and a polling timeout, but its expected result is still manually defined in `main.c`.
+
+Next steps are to export expected results, add an independent IR evaluator and repeatable randomized tests, and build a reusable board test runner. Liveness-based register reuse will follow, allowing programs with more than eight total results when their simultaneously live values fit in the available registers.
 
 ### Demo Output
 ---
-<b>Hardware Demo Output running C program on Nios V/m</b>
+<b>Hardware Demo: running compiler-generated instructions</b>
 ![system-demo-output](./doc/images/demo-output/system-demo-output.png)
 
 
 <b>Compiler Demo output</b>
 ![compiler-demo-output](./doc/images/demo-output/compiler-output.png)
 
+
+The compiler generates:
+* program.txt: Readable instruction listing for debugging.
+* program.h: C header used by the host application to load and run instructions on the FPGA.
+* program.bin: Raw binary instructions for potential future file-based loading. (not currently used in the workflow)
 
 The video below shows the DE10-lite board running the current design, along with a simple LED animation.
 
@@ -101,7 +116,8 @@ accelerator-compiler
 |       └── tb/                 # RTL testbenches
 ├── compiler/
 │   ├── include/                # C++ headers
-|   └── src/                    # compiler code
+|   ├── src/                    # compiler code
+|   └── tests/                  # unit tests
 ├── doc/                        # diagrams, images, & notes
 ├── .gitignore
 ├── LICENSE
