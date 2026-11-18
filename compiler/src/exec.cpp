@@ -11,7 +11,7 @@ std::array<std::uint32_t, 8> execute(const std::vector<std::uint32_t>& words) {
             throw std::runtime_error("Program must contain 1 - 512 words");
         }
 
-        // Every execution starts with cleared registers, including R8
+        // Every execution starts with R0-R7 cleared
         std::array<std::uint32_t, 8> registers{};
         std::size_t pc = 0;
 

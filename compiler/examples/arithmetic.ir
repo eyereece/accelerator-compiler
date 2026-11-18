@@ -1,0 +1,10 @@
+
+# Compute (7 + 3) * 2
+
+const v0 7
+const v1 3
+add v2 v0 v1
+const v3 2
+mul v4 v2 v3
+
+output v4
