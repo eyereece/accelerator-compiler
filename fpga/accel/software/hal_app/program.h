@@ -6,17 +6,18 @@
 
 static const uint32_t accel_program_words[] = {
     0x10000000u,
-    0x00000007u,
+    0x0000000Au,
     0x12000000u,
-    0x00000003u,
+    0x00000005u,
     0x24080000u,
     0x16000000u,
-    0x00000002u,
+    0x00000004u,
     0x48980000u,
     0x00000000u,
 };
 
 static const uint32_t accel_program_word_count = 9u;
 static const uint32_t accel_program_output_reg = 4u;
+static const uint32_t accel_program_expected_result = 60u;
 
 #endif

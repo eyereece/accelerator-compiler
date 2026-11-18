@@ -18,7 +18,6 @@
 #define STATUS_ERROR       0x4u
 
 #define MAX_POLLS          1000000u
-#define EXPECTED_RESULT    20u /* Reference executor result for this program. */
 
 #if CONTROLLER_0_SPAN != 4096
 #error "Controller address span must match the 4096-byte RTL interface."
@@ -115,10 +114,11 @@ int main(void)
         (unsigned long)result
     );
 
-    if (result != EXPECTED_RESULT) {
+    if (result != accel_program_expected_result) {
         printf(
-            "FAIL: expected %lu from reference execution.\n",
-            (unsigned long)EXPECTED_RESULT
+            "FAIL: expected %lu, got %lu.\n",
+            (unsigned long)accel_program_expected_result,
+            (unsigned long)result
         );
         return 1;
     }

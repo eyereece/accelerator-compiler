@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <optional>
 
 namespace accel {
 
@@ -11,7 +12,8 @@ namespace accel {
 // parent dir must already exist
 void export_program(const std::vector<std::uint32_t>& words,
                     std::uint32_t output_reg,
-                    const std::string& prefix);
+                    const std::string& prefix,
+                    std::optional<std::uint32_t> expected_result = std::nullopt);
 }   // namespace accel
 
 #endif

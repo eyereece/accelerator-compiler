@@ -105,10 +105,12 @@ int main(int argc, char* argv[]) {
         // 6. Reference execution
         const auto registers = execute(words);
 
+        const std::uint32_t expected_result = registers.at(allocation.output_reg);
+
         std::cout << "\nReference result: R"
                   << allocation.output_reg
                   << " = "
-                  << registers.at(allocation.output_reg)
+                  << expected_result
                   << '\n';
 
         // 7. Export generated instructions
@@ -125,7 +127,8 @@ int main(int argc, char* argv[]) {
         export_program(
             words,
             allocation.output_reg,
-            output_prefix
+            output_prefix,
+            expected_result
         );
 
         std::cout

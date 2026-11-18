@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <ostream>
 #include <stdexcept>
+#include <optional>
 
 namespace accel {
 namespace {
@@ -27,7 +28,8 @@ void finish(std::ofstream& out, const std::string& path) {
 
 void export_program(const std::vector<std::uint32_t>& words,
                     std::uint32_t output_reg,
-                    const std::string& prefix) {
+                    const std::string& prefix,
+                    std::optional<std::uint32_t> expected_result) {
     if (words.empty() || words.size() > 512 || output_reg >= 8) {
         throw std::runtime_error("Invalid program size or output register for export");
     }
@@ -109,8 +111,13 @@ void export_program(const std::vector<std::uint32_t>& words,
             << "static const uint32_t accel_program_word_count = "
             << words.size() << "u;\n"
             << "static const uint32_t accel_program_output_reg = "
-            << output_reg << "u;\n\n"
-            << "#endif\n";
+            << output_reg << "u;\n";
+
+    if (expected_result.has_value()) {
+        header << "static const uint32_t accel_program_expected_result = "
+                << expected_result.value() << "u;\n";
+    }
+    header << "\n#endif\n";
 
     finish(header, header_path);
 

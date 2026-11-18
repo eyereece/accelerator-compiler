@@ -1,10 +1,9 @@
 
-# Compute (7 + 3) * 2
+# Compute (10 + 5) *4 = 60
 
-const v0 7
-const v1 3
+const v0 10
+const v1 5
 add v2 v0 v1
-const v3 2
+const v3 4
 mul v4 v2 v3
-
 output v4
